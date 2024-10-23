@@ -182,4 +182,8 @@ impl PlatformApi for LinuxPlatformApi {
             process_path: process_path.unwrap_or_default(),
         })
     }
+
+    fn minimize(&self) {
+
+    }
 }

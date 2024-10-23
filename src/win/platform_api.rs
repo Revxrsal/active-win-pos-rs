@@ -2,14 +2,14 @@ use std::path::{Path, PathBuf};
 
 use windows::core::{HSTRING, PCWSTR, PWSTR};
 use windows::w;
-use windows::Win32::Foundation::{CloseHandle, HANDLE, MAX_PATH};
+use windows::Win32::Foundation::{CloseHandle, HANDLE, LPARAM, MAX_PATH, WPARAM};
 use windows::Win32::Storage::FileSystem::{
     GetFileVersionInfoSizeW, GetFileVersionInfoW, VerQueryValueW,
 };
 use windows::Win32::System::Threading::{
     OpenProcess, QueryFullProcessImageNameW, PROCESS_NAME_WIN32, PROCESS_QUERY_LIMITED_INFORMATION,
 };
-use windows::Win32::UI::WindowsAndMessaging::{GetGUIThreadInfo, GUITHREADINFO};
+use windows::Win32::UI::WindowsAndMessaging::{GetGUIThreadInfo, IsWindowVisible, SendMessageW, GUITHREADINFO, SC_MINIMIZE, WM_SYSCOMMAND};
 use windows::Win32::{
     Foundation::{HWND, RECT},
     UI::WindowsAndMessaging::{
@@ -70,11 +70,21 @@ impl PlatformApi for WindowsPlatformApi {
 
         Ok(active_window)
     }
+
+    fn minimize(&self) {
+        unsafe {
+            let active_window_hwnd = get_foreground_window();
+            let is_maximized = IsWindowVisible(active_window_hwnd).as_bool();
+            if is_maximized {
+                SendMessageW(active_window_hwnd, WM_SYSCOMMAND, WPARAM(SC_MINIMIZE as usize), LPARAM(0));
+            }
+        }
+    }
 }
 
 fn get_uwp_window_info(mut active_window: ActiveWindow) -> ActiveWindow {
     let mut gui_thread_info = GUITHREADINFO {
-        cbSize: std::mem::size_of::<GUITHREADINFO>() as u32,
+        cbSize: size_of::<GUITHREADINFO>() as u32,
         ..Default::default()
     };
 

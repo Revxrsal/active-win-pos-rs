@@ -124,6 +124,14 @@ impl PlatformApi for MacPlatformApi {
 
         Err(())
     }
+
+    fn minimize(&self) {
+        let active_app = unsafe {
+            let workspace = NSWorkspace::sharedWorkspace();
+            workspace.frontmostApplication()
+        };
+        active_app.hide();
+    }
 }
 
 // Taken from https://github.com/sassman/t-rec-rs/blob/v0.7.0/src/macos/window_id.rs#L73
