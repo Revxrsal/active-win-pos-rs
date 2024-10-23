@@ -126,19 +126,19 @@ impl PlatformApi for MacPlatformApi {
     }
 
     fn minimize(&self) {
-        let active_app = unsafe {
+        unsafe {
             let workspace = NSWorkspace::sharedWorkspace();
-            workspace.frontmostApplication()
+            let active_app = workspace.frontmostApplication();
+            active_app.hide();
         };
-        active_app.hide();
     }
 
     fn terminate(&self) {
-        let active_app = unsafe {
+        unsafe {
             let workspace = NSWorkspace::sharedWorkspace();
-            workspace.frontmostApplication()
+            let active_app = workspace.frontmostApplication();
+            active_app.terminate();
         };
-        active_app.terminate();
     }
 }
 
