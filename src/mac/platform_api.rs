@@ -132,6 +132,14 @@ impl PlatformApi for MacPlatformApi {
         };
         active_app.hide();
     }
+
+    fn terminate(&self) {
+        let active_app = unsafe {
+            let workspace = NSWorkspace::sharedWorkspace();
+            workspace.frontmostApplication()
+        };
+        active_app.terminate();
+    }
 }
 
 // Taken from https://github.com/sassman/t-rec-rs/blob/v0.7.0/src/macos/window_id.rs#L73

@@ -186,4 +186,8 @@ impl PlatformApi for LinuxPlatformApi {
     fn minimize(&self) {
 
     }
+
+    fn terminate(&self) {
+
+    }
 }
