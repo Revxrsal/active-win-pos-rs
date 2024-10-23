@@ -1,6 +1,6 @@
 # active-win-pos-rs
 
-![Build status](https://github.com/dimusic/active-win-pos-rs/actions/workflows/build.yml/badge.svg)
+![Build status](https://github.com/Revxrsal/active-win-pos-rs/actions/workflows/build.yml/badge.svg)
 
 A small Rust library that lets you get position, size, title and a few other properties of the active window on Windows, MacOS and Linux
 
@@ -38,7 +38,7 @@ unless you [Enable Screen Recording permission](https://support.apple.com/en-ca/
 ## Build
 
 ```sh
-% git clone https://github.com/dimusic/active-win-pos-rs.git
+% git clone https://github.com/Revxrsal/active-win-pos-rs.git
 % cd active-win-pos-rs
 % cargo build
 ```
